@@ -22,7 +22,7 @@ function check_failure() {
     fi
 }
 
-for src in 'DesignspaceTest' 'AvarDesignspaceTest'; do
+for src in 'DesignspaceTest' 'AvarDesignspaceTest' 'IncludedFeaturesDesignspaceTest'; do
     cd "${src}"
     fontmake -i -m "${src}.designspace"
     check_failure "${src} failed to build"

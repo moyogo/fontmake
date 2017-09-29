@@ -1,0 +1,27 @@
+<?xml version='1.0' encoding='utf-8'?>
+<designspace format="3">
+
+    <sources>
+        <source familyname="MyFont" filename="MyFont-Light.ufo" stylename="Light" name="MyFont Light">
+            <location>
+                <dimension name="weight" xvalue="300.0" />
+            </location>
+            <features copy="1" />
+            <info copy="1" />
+        </source>
+        <source familyname="MyFont" filename="MyFont-Bold.ufo" stylename="Bold" name="MyFont Bold">
+            <location>
+                <dimension name="weight" xvalue="700.0" />
+            </location>
+        </source>
+    </sources>
+
+    <instances>
+        <instance familyname="MyFont" filename="../instance_ufo/MyFont-Regular.ufo" stylename="Regular">
+            <location>
+                <dimension name="weight" xvalue="400.0" />
+            </location>
+            <info />
+        </instance>
+    </instances>
+</designspace>
