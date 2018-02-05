@@ -100,6 +100,9 @@ def main(args=None):
         help='Do not reverse contour direction when output is ttf or '
              'ttf-interpolatable')
     contourGroup.add_argument(
+        '--unnest-components', action='store_true',
+        help='Replace nested components by direct components')
+    contourGroup.add_argument(
         '-e', '--conversion-error', type=float, default=None, metavar='ERROR',
         help='Maximum approximation error for cubic to quadratic conversion '
              'measured in EM')

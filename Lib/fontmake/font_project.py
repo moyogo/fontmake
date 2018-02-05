@@ -170,7 +170,7 @@ class FontProject(object):
 
     def build_ttfs(
             self, ufos, remove_overlaps=True, reverse_direction=True,
-            conversion_error=None, **kwargs):
+            unnest_components=False, conversion_error=None, **kwargs):
         """Build OpenType binaries with TrueType outlines."""
 
         logger.info('Building TTFs')
@@ -184,7 +184,8 @@ class FontProject(object):
             self.remove_overlaps(ufos)
         self.convert_curves(ufos, reverse_direction=reverse_direction,
                             conversion_error=conversion_error)
-        self.save_otfs(ufos, ttf=True, **kwargs)
+        self.save_otfs(ufos, ttf=True, unnest_components=unnest_components,
+                       **kwargs)
 
     def build_interpolatable_ttfs(
             self, ufos, reverse_direction=True, conversion_error=None,
@@ -227,7 +228,8 @@ class FontProject(object):
             use_afdko=False, autohint=None, subset=None,
             use_production_names=None, subroutinize=False,
             interpolate_layout_from=None, kern_writer_class=None,
-            mark_writer_class=None, inplace=True):
+            mark_writer_class=None, inplace=True,
+            unnest_components=False):
         """Build OpenType binaries from UFOs.
 
         Args:
@@ -247,6 +249,8 @@ class FontProject(object):
                 interpolating layout tables to use in output.
             kern_writer_class: Class overriding ufo2ft's KernFeatureWriter.
             mark_writer_class: Class overriding ufo2ft's MarkFeatureWriter.
+            unnest_components: If True, replace TrueType nested components by
+                direct components.
         """
 
         ext = 'ttf' if ttf else 'otf'
@@ -281,7 +285,9 @@ class FontProject(object):
                 inplace=True,  # avoid extra copy
             )
             if ttf:
-                font = compileTTF(ufo, convertCubics=False, **compiler_options)
+                font = compileTTF(ufo, convertCubics=False,
+                                  unnestComponents=unnest_components,
+                                  **compiler_options)
             else:
                 font = compileOTF(ufo, optimizeCFF=subroutinize, **compiler_options)
 
@@ -438,7 +444,8 @@ class FontProject(object):
 
     def run_from_ufos(
             self, ufos, output=(), designspace_path=None,
-            remove_overlaps=True, reverse_direction=True, conversion_error=None,
+            remove_overlaps=True, reverse_direction=True,
+            unnest_components=False, conversion_error=None,
             **kwargs):
         """Run toolchain from UFO sources.
 
@@ -480,7 +487,8 @@ class FontProject(object):
             if need_reload:
                 ufos = [Font(path) for path in ufo_paths]
             self.build_ttfs(
-                ufos, remove_overlaps, reverse_direction, conversion_error,
+                ufos, remove_overlaps, reverse_direction, unnest_components,
+                conversion_error,
                 **kwargs)
             need_reload = True
 
